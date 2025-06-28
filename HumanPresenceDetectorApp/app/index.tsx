@@ -1,16 +1,18 @@
-import { Text, View } from "react-native";
-import Setup from "@/app/setup";
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AddDeviceScreen from './screens/AddDeviceScreen';
+import MyDevicesScreen from './screens/MyDevicesScreen';
+
+
+const Tab = createBottomTabNavigator();
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Setup />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="My Devices" component={MyDevicesScreen} />
+      <Tab.Screen name="Add Device" component={AddDeviceScreen} />
+    </Tab.Navigator>
   );
 }
+
+
