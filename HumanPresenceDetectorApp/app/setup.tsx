@@ -37,6 +37,7 @@ export default function Setup() {
         <>
             {loading ? <Text>Loading ... </Text> :
             devices?.flatMap(device => (<Text>{device.name}</Text>))}
+            <Button title={"load" } onPress={onSearchESPDevices}></Button>
         </>
     )
 }
