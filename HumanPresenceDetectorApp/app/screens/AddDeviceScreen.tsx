@@ -1,6 +1,6 @@
 import {useRouter} from 'expo-router';
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
 import {GlobalStyles} from '../styles/GlobalStyles';
 import SearchDeviceScreen from "@/app/screens/SearchDeviceScreen";
 import {ESPDevice, ESPWifiList} from "@orbital-systems/react-native-esp-idf-provisioning";
@@ -16,7 +16,7 @@ export default function AddDeviceScreen() {
     const [wifi, setWifi] = useState<ESPWifiList | undefined>(undefined);
 
     return (
-        <View style={GlobalStyles.container}>
+        <SafeAreaView style={GlobalStyles.container}>
             {state === "start" && (
                 <>
                     <Text style={GlobalStyles.header}>Available Devices</Text>
@@ -52,7 +52,7 @@ export default function AddDeviceScreen() {
             )}
 
 
-        </View>
+        </SafeAreaView>
 
     );
 }

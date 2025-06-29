@@ -1,7 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { allDevices } from '../screens/Devices';
 import { GlobalStyles } from '../styles/GlobalStyles';
 
@@ -11,7 +11,7 @@ export default function MyDevicesScreen() {
   const router = useRouter(); 
 
   return (
-    <View style={GlobalStyles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       <Text style={GlobalStyles.header}>My Devices</Text>
 
       <FlatList
@@ -37,7 +37,7 @@ export default function MyDevicesScreen() {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

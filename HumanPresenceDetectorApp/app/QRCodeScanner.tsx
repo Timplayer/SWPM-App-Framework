@@ -2,6 +2,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function QRScannerScreen() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -49,6 +50,9 @@ export default function QRScannerScreen() {
           barcodeTypes: ["qr"],
         }}
       />
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={24} color="white" />
+      </TouchableOpacity>
       {scanned && (
         <TouchableOpacity onPress={() => setScanned(false)} style={styles.button}>
           <Text style={styles.buttonText}>Erneut scannen</Text>
@@ -60,6 +64,14 @@ export default function QRScannerScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 20,
+    padding: 8,
+  },
   button: {
     position: 'absolute',
     bottom: 40,
