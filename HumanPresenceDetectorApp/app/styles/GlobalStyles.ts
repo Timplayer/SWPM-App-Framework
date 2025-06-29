@@ -5,9 +5,8 @@ export const GlobalStyles = StyleSheet.create({
   // groundlayout
   container: {
     flex: 1,
-    padding: 16,
-    paddingHorizontal: 24,
-    backgroundColor: '#fff',
+    padding: 20,
+    backgroundColor: '#f0f2f5',
   },
   title: {
     fontSize: 28,
@@ -15,9 +14,12 @@ export const GlobalStyles = StyleSheet.create({
     marginBottom: 30,},
   
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 16,
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+    paddingVertical: 10,
   },
   largeTitle: {
     fontSize: 28,
@@ -85,6 +87,15 @@ export const GlobalStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  backButton: {
+  alignSelf: 'flex-start',
+  paddingVertical: 8,
+  paddingHorizontal: 12,
+},
+backButtonText: {
+  fontSize: 16,
+  color: 'dodgerblue',
+},
 
   selectionCard: {
     backgroundColor: '#f2f2f2',
@@ -112,7 +123,7 @@ export const GlobalStyles = StyleSheet.create({
     marginBottom: 12,
   },
   deviceCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f9f9f9',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -120,10 +131,10 @@ export const GlobalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
 
   // Wi-Fi Buttons
