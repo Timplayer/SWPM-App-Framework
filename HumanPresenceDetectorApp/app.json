@@ -13,7 +13,12 @@
        "infoPlist": {
         "NSBluetoothAlwaysUsageDescription": "We use Bluetooth to pair with your smart scale.",
         "NSBluetoothPeripheralUsageDescription": "We use Bluetooth to pair with your smart scale.",
-        "UIBackgroundModes": ["bluetooth-central", "bluetooth-peripheral"]
+        "UIBackgroundModes": ["bluetooth-central", "bluetooth-peripheral"],
+        "NSLocalNetworkUsageDescription": "This app requires access to the local network to discover nearby IoT devices.",
+        "NSBonjourServices": [
+          "_http._tcp",
+          "_sensor._tcp"
+        ]
       }
     },
     "android": {
