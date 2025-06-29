@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { ESPDevice, ESPTransport, ESPSecurity } from "@orbital-systems/react-native-esp-idf-provisioning";
 
 export default function QRScannerScreen() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -19,13 +20,19 @@ export default function QRScannerScreen() {
     setScanned(true);
     try {
       const qrData = JSON.parse(data);
-      if (qrData.ssid && qrData.password) {
+      if (qrData.ver === "v1" && qrData.name && qrData.pop && qrData.transport === "ble") {
+        const device: ESPDevice = {
+          name: qrData.name,
+          transport: ESPTransport.ble,
+          security: ESPSecurity.secure2, // Assuming secure2 as default for BLE provisioning
+        };
+        console.log("Device from QR code:", device);
         router.push({
-          pathname: '/screens/WifiSetupPasswordScreen',
-          params: { ssid: qrData.ssid, password: qrData.password },
+          pathname: '/code',
+          params: { device: JSON.stringify(device), pop: qrData.pop },
         });
       } else {
-        alert('Invalid QR code data.');
+        alert('Invalid QR code data format.');
       }
     } catch (error) {
       alert('Invalid QR code data.');
