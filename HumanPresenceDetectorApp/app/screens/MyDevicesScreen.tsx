@@ -11,20 +11,20 @@ import {Device} from "@/app/Device";
 export default function MyDevicesScreen() {
   const router = useRouter();
   const [, update] = useState<any>();
-  const allDevices = useRef<Device[]>([])
+  const allDevices = useRef<{[key: string]: Device}>({})
 
   useEffect(() => {
       ServiceDiscovery.addEventListener('serviceFound', (service) => {
           console.log('Service found', service);
-          allDevices.current = [...allDevices.current, service]
+          allDevices.current[service.hostName] = service;
           update(allDevices)
       });
       ServiceDiscovery.addEventListener("serviceLost", (service) => {
           console.log('Service lost', service);
-          allDevices.current = allDevices.current.filter((dev) => dev.hostName !== service.hostName);
+          delete allDevices.current[service.hostName];
           update(allDevices)
       })
-      ServiceDiscovery.startSearch('sensor').then();
+      ServiceDiscovery.startSearch('http').then();
   })
 
   return (
@@ -32,7 +32,7 @@ export default function MyDevicesScreen() {
       <Text style={GlobalStyles.header}>My Devices</Text>
 
       <FlatList
-        data={allDevices.current}
+        data={ Object.values(allDevices.current)}
         keyExtractor={(item) => item.hostName}
         renderItem={({ item }) => (
           <View style={GlobalStyles.card}>
