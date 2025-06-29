@@ -1,5 +1,5 @@
-import {useRouter} from 'expo-router';
-import React, {useState} from 'react';
+import {useLocalSearchParams, useRouter} from 'expo-router';
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
 import {GlobalStyles} from '../styles/GlobalStyles';
 import SearchDeviceScreen from "@/app/screens/SearchDeviceScreen";
@@ -8,13 +8,23 @@ import AddDeviceCodeScreen from "@/app/screens/AddDeviceCodeScreen";
 import WifiSetupScreen from "@/app/screens/WifiSetupScreen";
 import WifiSetupPasswordScreen from "@/app/screens/WifiSetupPasswordScreen";
 import WifiConnectScreen from "@/app/screens/OtherWifiScreen";
+import QRCodeScannerScreen from "@/app/screens/QRCodeScannerScreen";
+
 import { Ionicons } from '@expo/vector-icons';
 
 export default function AddDeviceScreen() {
     const router = useRouter();
-    const [state, setState] = useState<"start" | "search" | "code" | "searchWifi" | "wifiPassword" | "wifiOther">("start")
+    const params = useLocalSearchParams();
+    const [state, setState] = useState<"start" | "search" | "code" | "searchWifi" | "qr" | "wifiPassword" | "wifiOther">("start")
     const [device, setDevice] = useState<ESPDevice | undefined>(undefined);
     const [wifi, setWifi] = useState<ESPWifiList | undefined>(undefined);
+
+    useEffect(() => {
+        if (params.state === "code" && params.device) {
+            setDevice(JSON.parse(params.device as string));
+            setState("code");
+        }
+    }, [params]);
 
     return (
         <SafeAreaView style={GlobalStyles.container}>
@@ -32,7 +42,7 @@ export default function AddDeviceScreen() {
 
                     <TouchableOpacity
                         style={GlobalStyles.selectionCard}
-                        onPress={() => router.push('/QRCodeScanner')}
+                        onPress={() => setState("qr")}
                     >
                         <Ionicons name="qr-code" size={50} color="#0f6b5c" />
                         <Text style={GlobalStyles.selectionCardText}>Scan QR Code</Text>
@@ -53,6 +63,9 @@ export default function AddDeviceScreen() {
             )}
             {state === "wifiOther" && device && (
                 <WifiConnectScreen setState={setState} device={device} />
+            )}
+            {state === "qr" && (
+                <QRCodeScannerScreen setState={setState} setDevice={setDevice}  />
             )}
 
 
