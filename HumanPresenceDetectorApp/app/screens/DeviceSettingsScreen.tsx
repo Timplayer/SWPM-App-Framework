@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../styles/GlobalStyles';
 
 export default function DeviceSettingsScreen() {
@@ -28,10 +28,13 @@ export default function DeviceSettingsScreen() {
 
   return (
     <View style={GlobalStyles.container}>
-      <Text style={GlobalStyles.title}>Settings</Text>
+      <Text style={GlobalStyles.header}>Device Settings</Text>
 
-      <TextInput style={GlobalStyles.input} placeholder="mqtt server" />
-      <TextInput style={GlobalStyles.input} placeholder="turn off delay" />
+      <View style={styles.settingsContainer}>
+        <Text style={styles.sectionTitle}>Network Settings</Text>
+        <TextInput style={GlobalStyles.input} placeholder="MQTT Server" />
+        <TextInput style={GlobalStyles.input} placeholder="Turn Off Delay" keyboardType="numeric" />
+      </View>
 
       <TouchableOpacity
         style={GlobalStyles.resetButton}
@@ -51,3 +54,23 @@ export default function DeviceSettingsScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  settingsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#333',
+  },
+});
