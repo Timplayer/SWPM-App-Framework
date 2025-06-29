@@ -1,39 +1,53 @@
-/*import { BarCodeScanner } from 'expo-barcode-scanner';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function QRScannerScreen() {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
+    if (!permission) {
+      requestPermission();
+    }
+  }, [permission, requestPermission]);
 
-  
-    const handleBarCodeScanned = ({ type, data }: any) => {
+  const handleBarCodeScanned = ({ type, data }: any) => {
     setScanned(true);
-    alert(`QR Code erkannt: ${data}`);
-    router.push('/screens/WifiSetupScreen');
+    try {
+      const qrData = JSON.parse(data);
+      if (qrData.ssid && qrData.password) {
+        router.push({
+          pathname: '/screens/WifiSetupPasswordScreen',
+          params: { ssid: qrData.ssid, password: qrData.password },
+        });
+      } else {
+        alert('Invalid QR code data.');
+      }
+    } catch (error) {
+      alert('Invalid QR code data.');
+    }
   };
 
-  if (hasPermission === null) {
-    return <Text>Frage Kamera-Erlaubnis an...</Text>;
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
   }
-  if (hasPermission === false) {
+
+  if (!permission.granted) {
     return <Text>Zugriff auf Kamera verweigert</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      <CameraView
+        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
+        barcodeScannerSettings={{
+          barcodeTypes: ["qr"],
+        }}
       />
       {scanned && (
         <TouchableOpacity onPress={() => setScanned(false)} style={styles.button}>
@@ -58,4 +72,3 @@ const styles = StyleSheet.create({
   },
   buttonText: { color: '#fff', fontWeight: 'bold' },
 });
-*/

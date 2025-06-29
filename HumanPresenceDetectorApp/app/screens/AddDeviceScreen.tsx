@@ -29,7 +29,7 @@ export default function AddDeviceScreen() {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={GlobalStyles.button}
-                        onPress={() => router.push('/screens/WifiSetupScreen')}
+                        onPress={() => router.push('/QRCodeScanner')}
                     >
                         <Text style={GlobalStyles.buttonText}>Scan QR Code</Text>
                     </TouchableOpacity>
