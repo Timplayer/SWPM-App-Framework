@@ -8,6 +8,7 @@ import AddDeviceCodeScreen from "@/app/screens/AddDeviceCodeScreen";
 import WifiSetupScreen from "@/app/screens/WifiSetupScreen";
 import WifiSetupPasswordScreen from "@/app/screens/WifiSetupPasswordScreen";
 import WifiConnectScreen from "@/app/screens/OtherWifiScreen";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AddDeviceScreen() {
     const router = useRouter();
@@ -18,22 +19,25 @@ export default function AddDeviceScreen() {
     return (
         <SafeAreaView style={GlobalStyles.container}>
             {state === "start" && (
-                <>
-                    <Text style={GlobalStyles.header}>Available Devices</Text>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={GlobalStyles.largeTitle}>Add a New Device</Text>
 
                     <TouchableOpacity
-                        style={GlobalStyles.button}
+                        style={GlobalStyles.selectionCard}
                         onPress={() => setState("search")}
                     >
-                        <Text style={GlobalStyles.buttonText}>Scan Ble</Text>
+                        <Ionicons name="bluetooth" size={50} color="#0f6b5c" />
+                        <Text style={GlobalStyles.selectionCardText}>Scan for Bluetooth Devices</Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity
-                        style={GlobalStyles.button}
+                        style={GlobalStyles.selectionCard}
                         onPress={() => router.push('/QRCodeScanner')}
                     >
-                        <Text style={GlobalStyles.buttonText}>Scan QR Code</Text>
+                        <Ionicons name="qr-code" size={50} color="#0f6b5c" />
+                        <Text style={GlobalStyles.selectionCardText}>Scan QR Code</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
             {state === "search" && (
                 <SearchDeviceScreen setState={setState} setDevice={setDevice}/>

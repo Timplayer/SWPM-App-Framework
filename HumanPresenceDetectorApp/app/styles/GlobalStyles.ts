@@ -77,12 +77,44 @@ export const GlobalStyles = StyleSheet.create({
     fontSize: 16,
   },
 
+  selectionCard: {
+    backgroundColor: '#f2f2f2',
+    padding: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  selectionCardText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginTop: 10,
+  },
   
   card: {
     backgroundColor: '#f2f2f2',
     padding: 16,
     borderRadius: 8,
     marginBottom: 12,
+  },
+  deviceCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
 
   // Wi-Fi Buttons

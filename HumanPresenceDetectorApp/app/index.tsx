@@ -26,8 +26,8 @@ export default function Index() {
         tabBarStyle: {
           position: 'absolute',
           bottom: 20,
-          left: 20,
-          right: 20,
+          left: 30,
+          right: 30,
           borderRadius: 15,
           height: 60,
           backgroundColor: 'white',

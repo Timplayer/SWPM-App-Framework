@@ -72,13 +72,18 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
     }
 
     return (
-        <View style={GlobalStyles.container}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
-                <TouchableOpacity onPress={() => setState("start")} style={{ padding: 8 }}>
-                    <Ionicons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-                <Text style={GlobalStyles.header}>Search for Devices</Text>
-            </View>
+        <View style={[GlobalStyles.container, {paddingBottom: 80, paddingTop: 60}]}>
+            <TouchableOpacity style={{
+                position: 'absolute',
+                top: 40,
+                left: 20,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                borderRadius: 20,
+                padding: 8,
+            }} onPress={() => setState("start")}>
+                <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
+            <Text style={[GlobalStyles.header, {textAlign: 'center', marginBottom: 16}]}>Search for Devices</Text>
 
             {renderContent()}
 
