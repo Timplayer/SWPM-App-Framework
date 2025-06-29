@@ -8,7 +8,7 @@ import AddDeviceCodeScreen from "@/app/screens/AddDeviceCodeScreen";
 import WifiSetupScreen from "@/app/screens/WifiSetupScreen";
 import WifiSetupPasswordScreen from "@/app/screens/WifiSetupPasswordScreen";
 import WifiConnectScreen from "@/app/screens/OtherWifiScreen";
-import QRCodeScannerScreen from "@/app/screens/QRCodeScannerScreen";
+import QRCodeScannerScreen from "./QRCodeScannerScreen";
 
 import { Ionicons } from '@expo/vector-icons';
 

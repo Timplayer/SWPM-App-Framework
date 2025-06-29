@@ -5,6 +5,7 @@ import { GlobalStyles } from '../styles/GlobalStyles';
 import {ESPDevice} from "@orbital-systems/react-native-esp-idf-provisioning";
 
 export default function AddDeviceCodeScreen(props: {setState: (state: "searchWifi") => void, device?: ESPDevice}) {
+  
   const {setState} = props;
   const params = useLocalSearchParams();
   const device: ESPDevice | undefined = params.device ? JSON.parse(params.device as string) : props.device;
