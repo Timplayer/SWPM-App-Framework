@@ -5,7 +5,7 @@ import {
     ESPSecurity,
     ESPTransport
 } from "@orbital-systems/react-native-esp-idf-provisioning";
-import { FlatList, Text, TouchableOpacity, View, ActivityIndicator } from "react-native";
+import { FlatList, Text, TouchableOpacity, View, ActivityIndicator, TextInput } from "react-native";
 import { GlobalStyles } from "@/app/styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,6 +13,7 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
     const { setState, setDevice } = props;
     const [allDevices, setAllDevices] = useState<ESPDevice[] | undefined>(undefined);
     const [isScanning, setIsScanning] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const onSearchESPDevices = React.useCallback(async () => {
         setIsScanning(true);
@@ -36,6 +37,13 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
         onSearchESPDevices();
     }, [onSearchESPDevices]);
 
+    const filteredDevices = React.useMemo(() => {
+        if (!allDevices) return [];
+        return allDevices.filter(device =>
+            device.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [allDevices, searchQuery]);
+
     const renderContent = () => {
         if (isScanning) {
             return (
@@ -46,20 +54,21 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
             );
         }
 
-        if (allDevices && allDevices.length === 0) {
+        if (filteredDevices.length === 0) {
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>No devices found.</Text>
+                    <Text>No devices found matching your search.</Text>
                 </View>
             );
         }
 
         return (
             <FlatList
-                data={allDevices}
+                data={filteredDevices}
                 keyExtractor={(item) => item.name}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={GlobalStyles.card} onPress={() => {
+                        console.log("Selected device from search:", item);
                         setDevice(item);
                         setState("code");
                     }}>
@@ -84,6 +93,20 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
                 <Ionicons name="arrow-back" size={24} color="white" />
             </TouchableOpacity>
             <Text style={[GlobalStyles.header, {textAlign: 'center', marginBottom: 16}]}>Search for Devices</Text>
+
+            <View style={GlobalStyles.searchInput}>
+                <TextInput
+                    style={{ flex: 1, paddingRight: 10 }}
+                    placeholder="Search devices..."
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
+                {searchQuery.length > 0 && (
+                    <TouchableOpacity onPress={() => setSearchQuery("")}>
+                        <Ionicons name="close-circle" size={20} color="gray" />
+                    </TouchableOpacity>
+                )}
+            </View>
 
             {renderContent()}
 

@@ -40,6 +40,15 @@ export const GlobalStyles = StyleSheet.create({
     padding: 12,
     marginBottom: 24,
   },
+  searchInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 
   otherButton: {
     backgroundColor: '#cfd8dc',
