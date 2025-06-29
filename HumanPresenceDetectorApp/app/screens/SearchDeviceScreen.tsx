@@ -34,16 +34,25 @@ export default function SearchDeviceScreen(props: {setState: (state :"code") => 
 
     useEffect(() => {onSearchESPDevices().then()}, [""])
 
-    return <FlatList
-        data={allDevices}
-        keyExtractor={(item) => item.name}
-        renderItem={({ item }) => (
-            <TouchableOpacity style={GlobalStyles.card} onPress={() => {
-                setDevice(item);
-                setState("code");
-            }}>
-                <Text style={GlobalStyles.deviceName}>{item.name}</Text>
-            </TouchableOpacity>
-        )}
-    />
+    return <>
+        <FlatList
+            data={allDevices}
+            keyExtractor={(item) => item.name}
+            renderItem={({ item }) => (
+                <TouchableOpacity style={GlobalStyles.card} onPress={() => {
+                    setDevice(item);
+                    setState("code");
+                }}>
+                    <Text style={GlobalStyles.deviceName}>{item.name}</Text>
+                </TouchableOpacity>
+            )}
+        />
+        <TouchableOpacity
+            style={[GlobalStyles.button, { marginTop: 16 }]}
+            onPress={onSearchESPDevices}
+        >
+            <Text style={GlobalStyles.buttonText}>Scan</Text>
+        </TouchableOpacity>
+    </>
+
 }
