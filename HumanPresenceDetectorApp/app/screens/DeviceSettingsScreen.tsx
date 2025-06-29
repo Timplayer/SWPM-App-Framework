@@ -6,12 +6,6 @@ import { GlobalStyles } from '../styles/GlobalStyles';
 export default function DeviceSettingsScreen() {
   const router = useRouter();
 
-    ServiceDiscovery.addEventListener('serviceFound', (service) => {
-        console.log('Service found', service);
-    });
-
-    ServiceDiscovery.startSearch('sensor').then();
-
   return (
     <View style={GlobalStyles.container}>
       <Text style={GlobalStyles.title}>Settings</Text>
