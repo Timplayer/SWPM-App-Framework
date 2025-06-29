@@ -41,7 +41,7 @@ export default function WifiSetupScreen(props: {setState:(state: "wifiPassword" 
         </TouchableOpacity>
       ))}
 
-      <View style={{ height: 60 }} /> {}
+      <View style={{ height: 60 }} />
 
       <TouchableOpacity
         style={GlobalStyles.otherButton}
