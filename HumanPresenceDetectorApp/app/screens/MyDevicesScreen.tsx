@@ -1,6 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import { GlobalStyles } from '../styles/GlobalStyles';
 import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
@@ -10,16 +10,19 @@ import {Device} from "@/app/Device";
 
 export default function MyDevicesScreen() {
   const router = useRouter();
+  const [, update] = useState<any>();
   const allDevices = useRef<Device[]>([])
 
   useEffect(() => {
       ServiceDiscovery.addEventListener('serviceFound', (service) => {
           console.log('Service found', service);
-          allDevices.current = [...allDevices.current, service];
+          allDevices.current = [...allDevices.current, service]
+          update(allDevices)
       });
       ServiceDiscovery.addEventListener("serviceLost", (service) => {
           console.log('Service lost', service);
-          allDevices.current=allDevices.current.filter((dev) => dev.hostName !== service.hostName);
+          allDevices.current = allDevices.current.filter((dev) => dev.hostName !== service.hostName);
+          update(allDevices)
       })
       ServiceDiscovery.startSearch('sensor').then();
   })
