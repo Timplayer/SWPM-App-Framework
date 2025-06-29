@@ -24,7 +24,7 @@ export default function MyDevicesScreen() {
           delete allDevices.current[service.hostName];
           update(allDevices)
       })
-      ServiceDiscovery.startSearch('http').then();
+      ServiceDiscovery.startSearch('sensor').then();
   })
 
   return (
