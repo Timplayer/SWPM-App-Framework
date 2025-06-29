@@ -1,70 +1,107 @@
-import {useLocalSearchParams} from 'expo-router';
-import React, {useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View, ActivityIndicator} from 'react-native';
-import {GlobalStyles} from '../styles/GlobalStyles';
-import {ESPDevice, ESPWifiList} from "@orbital-systems/react-native-esp-idf-provisioning";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
+import { ESPDevice, ESPWifiList } from "@orbital-systems/react-native-esp-idf-provisioning";
+import { GlobalStyles } from "../styles/GlobalStyles";
+
+type WizardState = "start" | "searchWifi" | "wifiPassword" /* … */;
 
 export default function WifiSetupPasswordScreen(props: {
-    setState: (state: "start") => void;
-    device: ESPDevice;
-    wifi: ESPWifiList;
+  setState: (state: "start") => void
+  device: ESPDevice;
+  wifi: ESPWifiList;
 }) {
-    const {setState, device, wifi} = props;
-    const ssid = wifi.ssid;
-    const [password, setPassword] = useState('');
-    const [connectionStatus, setConnectionStatus] = useState(''); // New state for connection status
-    const [loading, setLoading] = useState(false);
+  const { setState, device, wifi } = props;
+  const [password, setPassword] = useState("");
+  const [statusMsg, setStatusMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handleConnect = async () => {
-        setLoading(true);
-        setConnectionStatus("Connecting...");
-        try {
-            const status = await device.provision(wifi.ssid, password);
-            console.log(status);
-            setConnectionStatus("Connected successfully!");
-            // device.disconnect(); // Disconnect after successful provisioning if needed
-        } catch (error) {
-            console.error(error);
-            setConnectionStatus("Connection failed. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
+  const handleConnect = async () => {
+    setLoading(true);
+    setStatusMsg("Verbinde …");
 
-    return (
-        <View style={GlobalStyles.container}>
-            <Text style={GlobalStyles.header}>Connect to {ssid}</Text>
+    try {
+      await device.provision(wifi.ssid, password);
+      setStatusMsg("Verbunden!");
+    } catch (err) {
+      console.warn(err);
+      setStatusMsg("Verbindung fehlgeschlagen.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            <TextInput
-                placeholder="Password"
-                style={GlobalStyles.input}
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-                editable={!loading}
-            />
+  return (
+    <View style={GlobalStyles.container}>
+      {/* main content */}
+      <Text style={GlobalStyles.header}>Connect to {wifi.ssid}</Text>
 
-            {loading ? (
-                <ActivityIndicator size="large" color="#0f6b5c" />
-            ) : (
-                <TouchableOpacity style={GlobalStyles.button} onPress={handleConnect}>
-                    <Text style={GlobalStyles.buttonText}>Connect</Text>
-                </TouchableOpacity>
-            )}
+      <TextInput
+        placeholder="Password"
+        style={GlobalStyles.input}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        editable={!loading}
+      />
 
-            {connectionStatus.length > 0 && (
-                <Text style={{ marginTop: 20, textAlign: 'center', color: connectionStatus.includes("successfully") ? 'green' : 'red' }}>
-                    {connectionStatus}
-                </Text>
-            )}
+      <TouchableOpacity
+        style={GlobalStyles.button}
+        onPress={handleConnect}
+        disabled={loading}          // block double taps
+      >
+        <Text style={GlobalStyles.buttonText}>Connect</Text>
+      </TouchableOpacity>
 
-            {!loading && connectionStatus.length > 0 && (
-                <TouchableOpacity style={[GlobalStyles.button, { marginTop: 20 }]} onPress={() => setState("start")}>
-                    <Text style={GlobalStyles.buttonText}>Done</Text>
-                </TouchableOpacity>
-            )}
+      {statusMsg.length > 0 && (
+        <Text
+          style={{
+            marginTop: 20,
+            textAlign: "center",
+            color: statusMsg.includes("Verbunden") ? "green" : "red",
+          }}
+        >
+          {statusMsg}
+        </Text>
+      )}
+
+      {!loading && statusMsg.length > 0 && (
+        <TouchableOpacity
+          style={[GlobalStyles.button, { marginTop: 20 }]}
+          onPress={() => setState("start")}
+        >
+          <Text style={GlobalStyles.buttonText}>Done</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* full-screen loading overlay */}
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" />
+          <Text style={styles.loadingText}>{statusMsg}</Text>
         </View>
-    );
+      )}
+    </View>
+  );
 }
 
-
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    marginTop: 12,
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+});
