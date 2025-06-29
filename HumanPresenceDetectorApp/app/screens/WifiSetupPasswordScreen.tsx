@@ -28,7 +28,9 @@ export default function WifiSetupPasswordScreen(props: {
             <TouchableOpacity style={GlobalStyles.button} onPress={async () => {
                 console.log(password);
                 try {
-                    const status = await device.provision(wifi.ssid, password)
+                    const status = await device.provision(wifi.ssid, password);
+                    console.log(status);
+                    device.disconnect();
                 } catch (error) {
                     console.error(error);
                 }

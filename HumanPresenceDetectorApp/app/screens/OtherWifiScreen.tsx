@@ -27,7 +27,9 @@ export default function WifiConnectScreen(props: { setState: (state: "start") =>
       />
       <TouchableOpacity style={GlobalStyles.button} onPress={async () => {
           try {
-              await device.provision(ssid, password);
+              const status = await device.provision(ssid, password);
+              console.log(status);
+              device.disconnect();
               setState("start");
           } catch (e) {
               console.error(e);
