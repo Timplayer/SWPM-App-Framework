@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
+    "@inthepocket/react-native-service-discovery": "^0.2.0",
     "@orbital-systems/react-native-esp-idf-provisioning": "^0.4.6",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",

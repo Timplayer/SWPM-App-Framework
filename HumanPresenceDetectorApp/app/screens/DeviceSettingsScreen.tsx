@@ -1,10 +1,16 @@
-
+import * as ServiceDiscovery from '@inthepocket/react-native-service-discovery';
 import { useRouter } from "expo-router";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { GlobalStyles } from '../styles/GlobalStyles';
 
 export default function DeviceSettingsScreen() {
   const router = useRouter();
+
+    ServiceDiscovery.addEventListener('serviceFound', (service) => {
+        console.log('Service found', service);
+    });
+
+    ServiceDiscovery.startSearch('sensor').then();
 
   return (
     <View style={GlobalStyles.container}>
