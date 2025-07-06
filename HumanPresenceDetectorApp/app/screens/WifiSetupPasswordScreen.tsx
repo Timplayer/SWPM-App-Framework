@@ -44,6 +44,7 @@ export default function WifiSetupPasswordScreen(props: {
 
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#888"
         style={GlobalStyles.input}
         secureTextEntry
         value={password}

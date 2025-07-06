@@ -98,6 +98,7 @@ export default function SearchDeviceScreen(props: { setState: (state: "start" | 
                 <TextInput
                     style={{ flex: 1, paddingRight: 10 }}
                     placeholder="Search devices..."
+                    placeholderTextColor="#888"
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />

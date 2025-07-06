@@ -112,6 +112,7 @@ export default function DeviceSettingsScreen() {
           <TextInput
             style={GlobalStyles.input}
             placeholder="MQTT Server"
+            placeholderTextColor="#888"
             value={mqttServer}
             onChangeText={setMqttServer}
             autoCapitalize="none"
@@ -120,6 +121,7 @@ export default function DeviceSettingsScreen() {
           <TextInput
             style={GlobalStyles.input}
             placeholder="MQTT Port"
+            placeholderTextColor="#888"
             value={mqttPort}
             onChangeText={setMqttPort}
             keyboardType="numeric"
@@ -127,6 +129,7 @@ export default function DeviceSettingsScreen() {
           <TextInput
             style={GlobalStyles.input}
             placeholder="MQTT Topic"
+            placeholderTextColor="#888"
             value={mqttTopic}
             onChangeText={setMqttTopic}
             autoCapitalize="none"
@@ -136,6 +139,7 @@ export default function DeviceSettingsScreen() {
           <TextInput
             style={GlobalStyles.input}
             placeholder="Turn‑Off Delay (s)"
+            placeholderTextColor="#888"
             value={turnOffDelay}
             onChangeText={setTurnOffDelay}
             keyboardType="numeric"

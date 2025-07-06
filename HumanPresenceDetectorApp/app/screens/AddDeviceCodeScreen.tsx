@@ -54,6 +54,7 @@ export default function AddDeviceCodeScreen(props: {
         <>
           <TextInput
             placeholder="Enter code"
+            placeholderTextColor="#888"
             style={GlobalStyles.input}
             onChangeText={onChangeCode}
             value={code}

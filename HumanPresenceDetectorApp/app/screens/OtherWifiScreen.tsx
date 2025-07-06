@@ -54,6 +54,7 @@ export default function WifiConnectScreen(props: {
 
       <TextInput
         placeholder="Wi-Fi SSAAAID"
+        placeholderTextColor="#888"
         style={GlobalStyles.input}
         value={ssid}
         onChangeText={setSsid}
@@ -62,6 +63,7 @@ export default function WifiConnectScreen(props: {
 
       <TextInput
         placeholder="Wi-Fi Password"
+        placeholderTextColor="#888"
         style={GlobalStyles.input}
         secureTextEntry
         value={password}
