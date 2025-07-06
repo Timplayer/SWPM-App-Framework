@@ -59,12 +59,11 @@ export default function WifiSetupScreen({
   return (
     <View style={GlobalStyles.container}>
       {/* ---------- Return button ---------- */}
-      <TouchableOpacity style={styles.backButton} onPress={() => {
-        device.disconnect();
-        setState("start");
-      }}>
-        <Ionicons name="arrow-back" size={24} color="white" />
-      </TouchableOpacity>
+<TouchableOpacity
+  style={[styles.backButton, { zIndex: 10, elevation: 10 }]}
+  onPress={() => setState('start')}>
+  <Ionicons name="arrow-back" size={24} color="white" />
+</TouchableOpacity>
 
       <Text style={GlobalStyles.header}>Available Networks</Text>
 
